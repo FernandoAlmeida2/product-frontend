@@ -1,27 +1,158 @@
-# DashboardCrud
+# Product Management Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+A modern Angular application for managing products with a responsive dashboard, CRUD operations, and statistical visualizations.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- 📊 Real-time dashboard with product statistics
+- 📝 Complete CRUD operations for products
+- 📱 Responsive Material Design UI
+- 📈 Visual data representation using ApexCharts
+- 🔍 Advanced filtering and sorting capabilities
+- 🔄 Automatic API request logging
+- 🎯 Standalone components architecture
 
-## Code scaffolding
+## Technology Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular 17+
+- Angular Material
+- RxJS
+- ApexCharts
+- Angular In-Memory Web API (for demo purposes)
 
-## Build
+## Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Prerequisites
 
-## Running unit tests
+- Node.js 18+
+- npm 9+
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Installation
 
-## Running end-to-end tests
+1. Clone the repository:
+```bash
+git clone [repository-url]
+cd dashboard-crud
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. Install dependencies:
+```bash
+npm install
+```
 
-## Further help
+3. Start the development server:
+```bash
+npm start
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The application will be available at `http://localhost:4200`
+
+## Development
+
+### Project Structure
+
+```
+src/
+├── app/
+│   ├── core/
+│   │   ├── interceptors/
+│   │   └── services/
+│   ├── features/
+│   │   └── products/
+│   │       ├── dashboard/
+│   │       ├── product-form/
+│   │       └── product-list/
+│   ├── models/
+│   └── shared/
+├── assets/
+└── environments/
+```
+
+### Key Commands
+
+- `npm start` - Start development server
+- `npm run build` - Build production version
+- `npm test` - Run unit tests
+- `npm run e2e` - Run end-to-end tests
+- `npm run lint` - Run linting checks
+
+### Development Notes
+
+- Uses standalone components for better tree-shaking
+- Implements lazy loading for feature modules
+- Uses Angular Signals for state management
+- Implements automatic unsubscribe pattern using DestroyRef
+- Uses typed forms for better type safety
+
+## Docker Deployment
+
+1. Build the Docker image:
+```bash
+docker-compose build
+```
+
+2. Run the container:
+```bash
+docker-compose up -d
+```
+
+The application will be available at `http://localhost:80`
+
+## Testing
+
+### Unit Tests
+
+Run unit tests with:
+```bash
+npm test
+```
+
+Key test files:
+- `product.service.spec.ts` - Service tests
+- `product-list.component.spec.ts` - Component tests
+
+### E2E Tests
+
+Run end-to-end tests with:
+```bash
+npm run e2e
+```
+
+## Code Style
+
+This project follows Angular style guide and enforces:
+- ESLint rules for consistency
+- Prettier for code formatting
+- Commitlint for commit message format
+
+## Environment Configuration
+
+Two environment configurations are provided:
+- `environment.ts` - Development
+- `environment.prod.ts` - Production
+
+Update API URLs and other environment-specific variables in these files.
+
+## Contributing
+
+1. Branch naming convention:
+   - feature/[feature-name]
+   - bugfix/[bug-name]
+   - hotfix/[hotfix-name]
+
+2. Commit message format:
+   - feat: Add new feature
+   - fix: Fix bug
+   - docs: Update documentation
+   - style: Format code
+   - refactor: Refactor code
+   - test: Add tests
+
+3. Submit pull requests with:
+   - Clear description
+   - Screenshots (if UI changes)
+   - Test coverage report
+
+## License
+
+This project is licensed under the MIT License.
