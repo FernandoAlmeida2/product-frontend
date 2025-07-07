@@ -139,6 +139,7 @@ export class DashboardComponent implements OnInit {
   private productService = inject(ProductService);
   private destroy$ = new Subject<void>();
   protected stats: ProductStats | null = null;
+  protected chartVisible = false;
 
   protected chartOptions: ChartOptions = {
     series: [{
@@ -149,7 +150,7 @@ export class DashboardComponent implements OnInit {
       type: 'bar',
       height: 350,
       toolbar: {
-        show: false
+        show: true
       }
     },
     labels: [],
@@ -183,10 +184,23 @@ export class DashboardComponent implements OnInit {
   }
 
   private updateChart(stats: ProductStats) {
-    this.chartOptions.series = [{
+  // Esconde o gráfico
+  this.chartVisible = false;
+
+  // Atualiza os dados
+  this.chartOptions = {
+    ...this.chartOptions,
+    series: [{
       name: 'Products',
       data: stats.categoryDistribution.map(item => item.count)
-    }];
-    this.chartOptions.labels = stats.categoryDistribution.map(item => item.category);
-  }
+    }],
+    labels: stats.categoryDistribution.map(item => item.category)
+  };
+
+  // Força o re-render com pequeno delay
+  setTimeout(() => {
+    this.chartVisible = true;
+  });
+}
+
 }

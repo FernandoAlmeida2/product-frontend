@@ -67,7 +67,7 @@ import { ProductService } from '../../../core/services/product.service';
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let product">
-              <button mat-icon-button color="primary" [routerLink]="['/products', product.id, 'edit']">
+              <button mat-icon-button color="primary" [routerLink]="['/products', product.idProduct, 'edit']">
                 <mat-icon>edit</mat-icon>
               </button>
               <button mat-icon-button color="warn" (click)="deleteProduct(product)">

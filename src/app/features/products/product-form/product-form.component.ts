@@ -9,7 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ProductService } from '../../../core/services/product.service';
-import { Product, PRODUCT_CATEGORIES } from '../../../models/product.model';
+import { Product } from '../../../models/product.model';
+import { CategoryService } from 'src/app/core/services/category.service';
 
 @Component({
   selector: 'app-product-form',
@@ -46,8 +47,8 @@ import { Product, PRODUCT_CATEGORIES } from '../../../models/product.model';
             <mat-form-field class="full-width">
               <mat-label>Category</mat-label>
               <mat-select formControlName="category">
-                <mat-option *ngFor="let category of categories" [value]="category">
-                  {{category}}
+                <mat-option *ngFor="let category of categories" [value]="category.name">
+                  {{category.name}}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="productForm.get('category')?.errors?.['required']">
@@ -100,12 +101,14 @@ import { Product, PRODUCT_CATEGORIES } from '../../../models/product.model';
 export class ProductFormComponent {
   private fb = inject(FormBuilder);
   private productService = inject(ProductService);
+  private categoryService = inject(CategoryService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private destroy$ = new Subject<void>();
   
   protected productForm: FormGroup;
-  protected categories = PRODUCT_CATEGORIES;
+  //protected categories = PRODUCT_CATEGORIES;
+  categories: any[] = [];
   protected isEditMode = signal(false);
   private productId: string | null = null;
 
@@ -122,7 +125,9 @@ export class ProductFormComponent {
     });
 
     this.checkEditMode();
+    this.loadCategories();
   }
+
 
   private checkEditMode(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -145,20 +150,22 @@ export class ProductFormComponent {
     });
   }
 
+  loadCategories(): void {
+    this.categoryService.getCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar categorias', err);
+      }
+    });
+  }
+
   protected onSubmit(): void {
     if (this.productForm.valid) {
       const product: Product = this.productForm.value;
-      
-      if (this.isEditMode()) {
-        product.idProduct = this.productId!;
-        product.updatedAt = new Date();
-      } else {
-        product.createdAt = new Date();
-        product.updatedAt = new Date();
-      }
-
       const action$ = this.isEditMode()
-        ? this.productService.updateProduct(product)
+        ? this.productService.updateProduct(this.productId!, product)
         : this.productService.createProduct(product);
 
       action$.pipe(
